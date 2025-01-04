@@ -207,6 +207,13 @@ section {
     gap: 1rem;
 }
 
+.profile-pic-img {
+    width: 200px;
+    height: 200px;
+    padding-left: 100px;
+    padding-top: 100px;
+}
+
 /* ICONS */
 
 .icon {
