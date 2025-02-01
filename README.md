@@ -65,20 +65,6 @@ portfolio/
    - LinkedIn profile
    - Direct contact options
 
-## Setup and Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/portfolio.git
-```
-
-2. Navigate to the project directory:
-```bash
-cd portfolio
-```
-
-3. Open index.html in your browser or use a local development server.
-
 ## Performance Features
 
 - Optimized image loading
