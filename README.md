@@ -58,7 +58,7 @@ portfolio/
    - Strava API Integration
    - YouTube Dance Helper
    - Sleep Tracker App
-   - QHelpDesk Platform
+   - QHelpDesk Platform ([Live Demo](https://qhelpdeskapp.com) | [Source Code](https://github.com/jlai263/QHelpDesk))
 
 5. **Contact**
    - Professional email
