@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Justin Lai - Software Engineer</title>
+    <meta name="description" content="Justin Lai - Software Engineer Portfolio. Recent Computer Science graduate specializing in frontend development and IT support.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mediaqueries.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav id="desktop-nav">
-        <div class="logo">Justin Lai</div>
-        <div>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Justin Lai</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -19,208 +21,202 @@
             </ul>
         </div>
     </nav>
-    <nav id="hamburger-nav">
-        <div class="logo">Justin Lai</div>
-        <div class="hamburger-menu">
-            <div class="hamburger-icon" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="menu-links">
-                <li><a href="#about" onclick="toggleMenu()">About</a></li>
-                <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-                <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-                <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-            </div>
-        </div>
-    </nav>
+
     <section id="profile">
         <div class="section__pic-container">
-            <img src="./assets/profile-pic.jpg" alt="Justin Lai profile picture" class="profile-pic-img">
+            <img src="./assets/profile-pic.jpg" alt="Justin Lai" class="profile-pic-img">
         </div>
         <div class="section__text">
             <p class="section__text__p1">Hello, I'm</p>
-            <h1 class ="title">Justin Lai</h1>
-            <p class="section__text__p2">Entry-Level Software Engineer<br>Recent CS Graduate</p>
+            <h1 class="title">Justin Lai</h1>
+            <p class="section__text__p2">Software Engineer</p>
+            <p>Driven to create efficient, user-centric solutions through clean code and innovative problem-solving. Combining technical expertise with a strong focus on delivering measurable results.</p>
+            
             <div class="btn-container">
-                <button class="btn btn-color-2" onclick="window.open('./assets/resume.pdf')">Download CV</button>
-                <button class="btn btn-color-1" onclick="location.href='./#contact'">Contact Info</button>
-            </div>
-            <div id="socials-container">
-                <img src="./assets/linkedin.png" alt="My Linkedin profile"
-                class="icon" onclick="location.href='https://www.linkedin.com/in/justin-lai263/'">
-                <img src="./assets/github.png" alt="My Github profile"
-                class="icon" onclick="location.href='https://github.com/jlai263'">
-                
+                <button class="btn btn-color-2" onclick="window.open('./assets/resume.pdf')">
+                    <i class="fas fa-file-alt"></i> View Resume
+                </button>
+                <button class="btn btn-color-2" onclick="location.href='#contact'">
+                    <i class="fas fa-envelope"></i> Contact Me
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://www.linkedin.com/in/justin-lai263/', '_blank')">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/jlai263', '_blank')">
+                    <i class="fab fa-github"></i> GitHub
+                </button>
             </div>
         </div>
     </section>
+
     <section id="about">
         <p class="section__text__p1">Get To Know More</p>
-        <h1 class="title">About Me</h1>
-        <div class="section-container">
-            <div class="section__pic-container">
-                <img src="./assets/about-pic.jpg" alt="Profile picture" class="about-pic">
+        <h2 class="title">About Me</h2>
+        
+        <div class="about-containers">
+            <div class="details-container">
+                <i class="fas fa-code fa-2x"></i>
+                <h3>Technical Skills</h3>
+                <p>2+ years Frontend Development<br>Java, Python, JavaScript<br>React, HTML/CSS</p>
             </div>
-            <div class="about-details-container">
-                <div class="about-containers">
-                    <div class="details-container">
-                        <img src="./assets/experience.png" alt="Experience Icon" class="icon">
-                        <h3>Academic Experience</h3>
-                        <p2>2+ years <br/>Frontend Development</p>
-                    </div>
-                    <div class="details-container">
-                        <img src="./assets/education.png" alt="Education Icon" class="icon">
-                        <h3>Education</h3>
-                        <p2>B.Sc. Computer Science <br/>University of Western Ontario</p>
-                    </div>
-                </div>
-                <div class="text-container">
-                    <p>Hello! My name is Justin Lai, and I am a recent graduate from Western University, where I earned my Bachelor's degree in Computer Science. I have a keen interest in front-end development and IT support, and I am eager to apply my technical skills to create engaging and efficient digital experiences.<br>
-                        <br>
-                        Beyond my professional interests, I enjoy staying active through running, which helps me stay disciplined and motivated. I recently completed my first marathon (TCS Waterfront Toronto) and I am already training for my next one (Chicago marathon).<br>
-                        <br>
-                        I am excited about opportunities to contribute to projects that make a difference and help drive innovation. Feel free to explore my portfolio to learn more about my work, skills, and experiences!
-                        </p>
-                </div>
+            <div class="details-container">
+                <i class="fas fa-graduation-cap fa-2x"></i>
+                <h3>Education</h3>
+                <p>B.Sc. Computer Science<br>University of Western Ontario<br>Class of 2024</p>
+            </div>
+            <div class="details-container">
+                <i class="fas fa-running fa-2x"></i>
+                <h3>Personal Achievements</h3>
+                <p>Completed Toronto Marathon<br>Training for Chicago Marathon<br>Dedicated to Growth</p>
             </div>
         </div>
-        <img src="./assets/arrow.png" alt="Arrow Icon" class="icon arrow" onclick="location.href='./#experience'">
+        
+        <div class="text-container">
+            <p>As a recent graduate from Western University with a degree in Computer Science, I bring a fresh perspective and strong technical foundation to software development. My journey in tech is driven by a passion for creating intuitive user experiences and solving complex problems.</p>
+            <p>Beyond coding, I'm an avid marathon runner, having completed the TCS Waterfront Toronto Marathon and currently training for the Chicago Marathon. This pursuit has taught me valuable lessons about persistence, goal-setting, and continuous improvement - principles I apply to my professional work as well.</p>
+            <p>I'm particularly interested in frontend development and IT support, where I can combine my technical skills with my desire to create meaningful user experiences. I'm always eager to learn new technologies and take on challenging projects that push my boundaries.</p>
+        </div>
     </section>
+
     <section id="experience">
         <p class="section__text__p1">Explore My</p>
-        <h1 class="title">Experience</h1>
+        <h2 class="title">Experience</h2>
+        
         <div class="experience-details-container">
-            <div class="about-containers">
-                <div class="details-container">
-                    <h2 class="experience-sub-title">Frontend Development</h2>
-                    <div class="article-container">
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>HTML</h3>
-                                <p>Experienced</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>CSS</h3>
-                                <p>Experienced</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>JavaScript</h3>
-                                <p>Basic</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>React</h3>
-                                <p>Basic</p>
-                            </div>
-                        </article>
-                    </div>
+            <div class="details-container">
+                <h3 class="experience-sub-title">Frontend Development</h3>
+                <div class="article-container">
+                    <article>
+                        <i class="fab fa-html5"></i>
+                        <div>
+                            <h3>HTML</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fab fa-css3-alt"></i>
+                        <div>
+                            <h3>CSS</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fab fa-js"></i>
+                        <div>
+                            <h3>JavaScript</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fab fa-react"></i>
+                        <div>
+                            <h3>React</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
                 </div>
-                <div class="details-container">
-                    <h2 class="experience-sub-title">Backend Development</h2>
-                    <div class="article-container">
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>Java</h3>
-                                <p>Experienced</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>Python</h3>
-                                <p>Experienced</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>SQL</h3>
-                                <p>Basic</p>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="./assets/checkmark.png" alt="Experience icon" class="icon">
-                            <div>
-                                <h3>PHP</h3>
-                                <p>Basic</p>
-                            </div>
-                        </article>
-                    </div>
+            </div>
+            
+            <div class="details-container">
+                <h3 class="experience-sub-title">Backend Development</h3>
+                <div class="article-container">
+                    <article>
+                        <i class="fab fa-java"></i>
+                        <div>
+                            <h3>Java</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fab fa-python"></i>
+                        <div>
+                            <h3>Python</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <h3>SQL</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="fab fa-php"></i>
+                        <div>
+                            <h3>PHP</h3>
+                            <p>Basic</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
-        <img src="./assets/arrow.png" alt="Arrow Icon" class="icon arrow" onclick="location.href='./#projects'">
     </section>
+
     <section id="projects">
         <p class="section__text__p1">Browse My Recent</p>
-        <h1 class="title">Projects</h1>
+        <h2 class="title">Projects</h2>
+        
         <div class="experience-details-container">
-            <div class="about-containers">
-            <div class="details-container color-contianer">
-                <div class="article-container">
-                    <img src="./assets/project-1.png" alt="Project 1" class="project-img">
-                </div>
-                <h2 class="experience-sub-title projec-title">Strava API App</h2>
+            <div class="color-container">
+                <img src="./assets/project-1.png" alt="Strava API Project" class="project-img">
+                <h3>Strava API Integration</h3>
+                <p>A web application that leverages the Strava API to track and analyze running performance metrics, built with React and Node.js.</p>
                 <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/jlai263/strava-api-app/tree/main'">
-                        Github
+                    <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/jlai263/strava-api-app/tree/main')">
+                        <i class="fab fa-github"></i> Source Code
                     </button>
                 </div>
             </div>
-            <div class="details-container color-contianer">
-                <div class="article-container">
-                    <img src="./assets/project-2.png" alt="Project 2" class="project-img">
-                </div>
-                <h2 class="experience-sub-title projec-title">YouTube Extension</h2>
+            
+            <div class="color-container">
+                <img src="./assets/project-2.png" alt="YouTube Extension Project" class="project-img">
+                <h3>YouTube Dance Helper</h3>
+                <p>A Chrome extension that enhances the YouTube experience for dance practice, featuring custom playback controls and loop functionality.</p>
                 <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/jlai263/YouTube-Dance-Helper'">
-                        Github
+                    <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/jlai263/YouTube-Dance-Helper')">
+                        <i class="fab fa-github"></i> Source Code
                     </button>
                 </div>
             </div>
-            <div class="details-container color-contianer">
-                <div class="article-container">
-                    <img src="./assets/project-3.png" alt="Project 3" class="project-img">
-                </div>
-                <h2 class="experience-sub-title projec-title">Sleep App</h2>
+            
+            <div class="color-container">
+                <img src="./assets/project-3.png" alt="Sleep App Project" class="project-img">
+                <h3>Sleep Tracker App</h3>
+                <p>A mobile application for tracking sleep patterns and providing insights for better sleep habits, developed using React Native.</p>
                 <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/jlai263/Sleep-App'">
-                        Github
+                    <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/jlai263/Sleep-App')">
+                        <i class="fab fa-github"></i> Source Code
                     </button>
                 </div>
             </div>
         </div>
-        </div>
-        <img src="./assets/arrow.png" alt="Arrow Icon" class="icon arrow" onclick="location.href='./#contact'">
     </section>
+
     <section id="contact">
         <p class="section__text__p1">Get in Touch</p>
-        <h1 class="title">Contact Me</h1>
+        <h2 class="title">Contact Me</h2>
+        
         <div class="contact-info-upper-container">
             <div class="contact-info-container">
-                <img src="./assets/email.png" alt="email icon" class="icon contact-icon email-icon">
-                <p><a href="mailto:justin6001@gmail.com">Justin6001@gmail.com</a></p>
-            </div>
-                <div class="contact-info-container">
-                    <img src="./assets/linkedin.png" alt="Linkedin icon" class="icon contact-icon">
-                    <p><a href="https://www.linkedin.com/in/justin-lai263/">Linkedin</a></p>
+                <i class="fas fa-envelope fa-2x"></i>
+                <div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:justin6001@gmail.com">justin6001@gmail.com</a></p>
                 </div>
             </div>
+            <div class="contact-info-container">
+                <i class="fab fa-linkedin fa-2x"></i>
+                <div>
+                    <h3>LinkedIn</h3>
+                    <p><a href="https://www.linkedin.com/in/justin-lai263/" target="_blank">Connect with me</a></p>
+                </div>
+            </div>
+        </div>
     </section>
+
     <footer>
-        <nav>
+        <div class="footer-content">
             <div class="nav-links-container">
                 <ul class="nav-links">
                     <li><a href="#about">About</a></li>
@@ -229,11 +225,10 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-        </nav>
-        <p>
-            Copyright &#169; 2025 Justin Lai. All Rights Reserved.
-        </p>
+            <p>© 2024 Justin Lai. All Rights Reserved.</p>
+        </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
