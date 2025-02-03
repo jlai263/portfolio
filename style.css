@@ -22,11 +22,18 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     line-height: 1.6;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
 }
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 0;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 p {
@@ -46,6 +53,7 @@ a,
 nav {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(5px);
@@ -53,6 +61,7 @@ nav {
     z-index: 1000;
     padding: 1rem 2rem;
     height: 80px;
+    transform: translateZ(0);
 }
 
 .nav-content {
@@ -89,13 +98,19 @@ a:hover {
 /* SECTIONS */
 
 section {
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
     min-height: 100vh;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 /* PROFILE SECTION */
@@ -104,18 +119,53 @@ section {
     display: flex;
     align-items: center;
     gap: 4rem;
-    padding-top: 8rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
+    margin-top: 2rem;
+    perspective: 1000px;
+    animation: splitReveal 2s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+    transform-style: preserve-3d;
+    min-height: calc(100vh - 4rem);
+}
+
+/* Remove any conflicting visibility rules */
+#profile > * {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#profile.content-loaded > * {
+    opacity: 1;
 }
 
 .section__pic-container {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(37, 99, 235, 0.3);
     flex-shrink: 0;
     aspect-ratio: 1/1;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.section__pic-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(37, 99, 235, 0.1),
+        transparent
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
 }
 
 .profile-pic-img {
@@ -128,38 +178,73 @@ section {
 
 .section__text {
     flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 350px; /* Reduced from 400px */
 }
 
+/* Profile text styles */
 .section__text__p1 {
+    position: relative;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.title {
+    position: relative;
+    font-size: 3.2rem; /* Slightly reduced */
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.1;
+    margin: 0.5rem 0;
+}
+
+/* Section heading styles */
+.section-heading-small {
     color: var(--primary-color);
     font-weight: 600;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
-.section__text__p2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 1rem 0;
-    color: var(--text-color);
-}
-
-.title {
+.section-heading-large {
     font-size: 3.5rem;
     font-weight: 700;
     color: var(--text-color);
     line-height: 1.2;
-    margin-bottom: 1rem;
+    margin: 0.5rem 0 2rem 0;
 }
 
-/* BUTTONS */
+.section__text__p2 {
+    position: relative;
+    font-size: 1.8rem; /* Slightly reduced */
+    font-weight: 700;
+    margin: 0.8rem 0;
+}
 
+/* Description paragraph */
+.section__text > p:not(.section__text__p1):not(.section__text__p2) {
+    position: relative;
+    margin: 0.8rem 0;
+    min-height: 4.8em;
+    width: 100%;
+    white-space: pre-wrap;
+    opacity: 0;
+}
+
+/* Button container */
 .btn-container {
+    position: relative;
     display: flex;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     flex-wrap: wrap;
     justify-content: flex-start;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -212,7 +297,73 @@ section {
     margin: 2rem 0;
 }
 
+/* Smooth Card Intro Animation */
+.details-container,
+.color-container {
+    background-color: #f8fafc;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Start hidden and slightly shifted downward */
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    /* Animate to visible and in-place using GPU-accelerated transform */
+    animation: fadeInCard 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    /* Use the custom delay variable (set via nth-child rules) or default to 0 */
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeInCard {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Stagger animation delays for cards */
+.details-container:nth-child(1) { --delay: 0.1s; }
+.details-container:nth-child(2) { --delay: 0.3s; }
+.details-container:nth-child(3) { --delay: 0.5s; }
+
+.color-container:nth-child(1) { --delay: 0.2s; }
+.color-container:nth-child(2) { --delay: 0.4s; }
+.color-container:nth-child(3) { --delay: 0.6s; }
+.color-container:nth-child(4) { --delay: 0.8s; }
+
+/* Remove old animation classes since we're using the new card animation */
+.fade-in-element,
+.fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+.content-hidden {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    pointer-events: none;
+}
+
+.content-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Remove duplicate styles */
 .details-container {
+    background-color: #f8fafc;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.color-container {
     background-color: #f8fafc;
     border-radius: 20px;
     padding: 2rem;
@@ -253,13 +404,6 @@ article {
     margin-bottom: 1rem;
 }
 
-.color-container {
-    background-color: #f8fafc;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
 /* CONTACT SECTION */
 
 .contact-info-upper-container {
@@ -289,19 +433,37 @@ footer {
 
 /* ANIMATIONS */
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+@keyframes splitReveal {
+    0% {
+        clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+        background: var(--bg-color);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    30% {
+        clip-path: polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%);
+        background: var(--bg-color);
+    }
+    70% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        background: var(--bg-color);
+    }
+    100% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        background: var(--bg-color);
     }
 }
 
-section {
-    animation: fadeIn 1s ease-out;
+@keyframes flip3D {
+    0% {
+        opacity: 0;
+        transform: rotateY(-180deg) scale(0.9);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0) scale(1);
+    }
 }
 
 /* MEDIA QUERIES */
@@ -312,19 +474,18 @@ section {
     }
     
     #profile {
-        flex-direction: column;
-        text-align: center;
         padding-top: 6rem;
+        min-height: calc(100vh - 3rem);
     }
 
     .section__pic-container {
-        width: 250px;
-        height: 250px;
+        width: 220px;
+        height: 220px;
         margin: 0 auto;
-        min-width: 250px;
-        min-height: 250px;
-        max-width: 250px;
-        max-height: 250px;
+        min-width: 220px;
+        min-height: 220px;
+        max-width: 220px;
+        max-height: 220px;
     }
     
     .section__text {
@@ -355,16 +516,25 @@ section {
     section {
         padding: 4rem 1rem;
     }
+
+    .section-heading-large {
+        font-size: 2.5rem;
+    }
 }
 
 @media (max-width: 480px) {
+    #profile {
+        padding-top: 5rem;
+        margin-top: 1rem;
+    }
+
     .section__pic-container {
-        width: 200px;
-        height: 200px;
-        min-width: 200px;
-        min-height: 200px;
-        max-width: 200px;
-        max-height: 200px;
+        width: 180px;
+        height: 180px;
+        min-width: 180px;
+        min-height: 180px;
+        max-width: 180px;
+        max-height: 180px;
     }
     
     .btn-container {
@@ -380,4 +550,31 @@ section {
     .title {
         font-size: 2rem;
     }
+}
+
+/* CANVAS AND PARTICLES */
+.canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Enhanced section animations */
+.section-animate {
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }

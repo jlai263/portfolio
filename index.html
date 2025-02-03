@@ -8,8 +8,18 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mediaqueries.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
+    <!-- Add canvas container for WebGL -->
+    <div id="particles-js"></div>
+    <div class="canvas-container"></div>
+    
     <nav>
         <div class="nav-content">
             <div class="logo">Justin Lai</div>
@@ -50,8 +60,8 @@
     </section>
 
     <section id="about">
-        <p class="section__text__p1">Get To Know More</p>
-        <h2 class="title">About Me</h2>
+        <p class="section-heading-small">Get To Know More</p>
+        <h2 class="section-heading-large">About Me</h2>
         
         <div class="about-containers">
             <div class="details-container">
@@ -79,8 +89,8 @@
     </section>
 
     <section id="experience">
-        <p class="section__text__p1">Explore My</p>
-        <h2 class="title">Experience</h2>
+        <p class="section-heading-small">Explore My</p>
+        <h2 class="section-heading-large">Experience</h2>
         
         <div class="experience-details-container">
             <div class="details-container">
@@ -154,8 +164,8 @@
     </section>
 
     <section id="projects">
-        <p class="section__text__p1">Browse My Recent</p>
-        <h2 class="title">Projects</h2>
+        <p class="section-heading-small">Browse My Recent</p>
+        <h2 class="section-heading-large">Projects</h2>
         
         <div class="experience-details-container">
             <div class="color-container">
@@ -208,8 +218,8 @@
     </section>
 
     <section id="contact">
-        <p class="section__text__p1">Get in Touch</p>
-        <h2 class="title">Contact Me</h2>
+        <p class="section-heading-small">Get in Touch</p>
+        <h2 class="section-heading-large">Contact Me</h2>
         
         <div class="contact-info-upper-container">
             <div class="contact-info-container">
