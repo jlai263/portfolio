@@ -35,7 +35,15 @@
     height: fit-content;
   }
   section {
-    margin: 0 5%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+  .section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
   .section__pic-container {
     width: 275px;
@@ -168,6 +176,8 @@
   .contact-info-upper-container,
   .btn-container {
     flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
   }
 
   .contact-info-container {
@@ -203,6 +213,10 @@
 
   .text-container {
     text-align: justify;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -252,6 +266,12 @@
   }
 
   .text-container {
-    margin: 0;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .section-container {
+    padding: 0 1rem;
   }
 }
