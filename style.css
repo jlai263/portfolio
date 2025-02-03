@@ -114,12 +114,16 @@ section {
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
 }
 
 .profile-pic-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 20%;
+    aspect-ratio: 1/1;
 }
 
 .section__text {
@@ -312,6 +316,28 @@ section {
         text-align: center;
         padding-top: 6rem;
     }
+
+    .section__pic-container {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto;
+        min-width: 250px;
+        min-height: 250px;
+        max-width: 250px;
+        max-height: 250px;
+    }
+    
+    .section__text {
+        text-align: center;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .section__text__p2 {
+        font-size: 1.5rem;
+    }
     
     .about-containers {
         grid-template-columns: 1fr;
@@ -320,5 +346,38 @@ section {
     .contact-info-upper-container {
         flex-direction: column;
         align-items: center;
+    }
+
+    .experience-details-container {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 4rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section__pic-container {
+        width: 200px;
+        height: 200px;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 200px;
+        max-height: 200px;
+    }
+    
+    .btn-container {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .title {
+        font-size: 2rem;
     }
 }
