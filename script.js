@@ -300,6 +300,45 @@ document.addEventListener('DOMContentLoaded', () => {
         behavior: 'instant'
     });
     
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (hamburger && navLinks) {
+        // Prevent click event from bubbling up
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !hamburger.contains(e.target) && 
+                !navLinks.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Close mobile menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when scrolling
+        window.addEventListener('scroll', () => {
+            if (navLinks.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+    
     // Make project buttons and contact links visible immediately
     document.querySelectorAll('.project-btn, .contact-info-container a').forEach(el => {
         el.style.opacity = '1';
