@@ -300,12 +300,26 @@ document.addEventListener('DOMContentLoaded', () => {
         behavior: 'instant'
     });
     
+    // Make project buttons and contact links visible immediately
+    document.querySelectorAll('.project-btn, .contact-info-container a').forEach(el => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.pointerEvents = 'auto'; // Ensure elements are clickable
+    });
+    
     // Prevent any scroll during initial animation
     document.body.style.overflow = 'hidden';
     
-    // Hide all content initially
-    document.querySelectorAll('section:not(#profile), .section__pic-container, .details-container, .color-container')
-        .forEach(el => el.classList.add('content-hidden'));
+    // Hide all content initially except project buttons and contact links
+    document.querySelectorAll('section:not(#profile):not(.project-btn), .section__pic-container, .details-container')
+        .forEach(el => {
+            if (!el.classList.contains('project-btn') && 
+                !el.closest('.project-btn') && 
+                !el.classList.contains('contact-info-container') &&
+                !el.closest('.contact-info-container')) {
+                el.classList.add('content-hidden');
+            }
+        });
 
     // Hide profile content initially
     const profileContent = document.querySelectorAll('.section__text__p1, .title, .section__text__p2, .section__text > p:not(.section__text__p1):not(.section__text__p2), .btn-container, .section__pic-container');

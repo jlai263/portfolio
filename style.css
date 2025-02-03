@@ -420,6 +420,37 @@ article {
     display: flex;
     align-items: center;
     gap: 1rem;
+    pointer-events: auto !important;
+}
+
+.contact-info-container div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    pointer-events: auto !important;
+}
+
+.contact-info-container h3 {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.contact-info-container p {
+    margin: 0;
+}
+
+.contact-info-container a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+    pointer-events: auto !important;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+
+.contact-info-container a:hover {
+    color: var(--secondary-color);
 }
 
 /* FOOTER */
