@@ -25,10 +25,13 @@ async function getStravaData() {
         const tokenData = await tokenResponse.json();
         const accessToken = tokenData.access_token;
 
+        console.log("Successfully fetched Access Token.");
+
         // 2. Fetch the last 52 weeks of activities
         let activities = [];
         let page = 1;
-        const oneYearAgo = Math.floor((Date.now() - (52 * 7 * 24 * 60 * 60 * 1000)) / 1000);
+        // Calculate 52 weeks ago (buffer of a few extra days to be safe)
+        const oneYearAgo = Math.floor((Date.now() - (53 * 7 * 24 * 60 * 60 * 1000)) / 1000);
 
         while (true) {
             const res = await fetch(`https://www.strava.com/api/v3/athlete/activities?after=${oneYearAgo}&per_page=200&page=${page}`, {
