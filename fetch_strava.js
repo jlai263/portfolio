@@ -1,374 +1,109 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Justin Lai | Technical Support Professional</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        tech: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            900: '#0c4a6e',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-        ::selection {
-            background-color: #e0f2fe;
-            color: #0c4a6e;
-        }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-tech-100 selection:text-tech-900">
+const fs = require('fs');
 
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-slate-50/80 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold tracking-tight text-slate-900 hover:text-tech-600 transition-colors">JL.</a>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-                <a href="#about" class="hover:text-tech-600 transition-colors">About</a>
-                <a href="#skills" class="hover:text-tech-600 transition-colors">Competencies</a>
-                <a href="#experience" class="hover:text-tech-600 transition-colors">Experience</a>
-                <a href="#education" class="hover:text-tech-600 transition-colors">Education</a>
-                <a href="#contact" class="hover:text-tech-600 transition-colors">Contact</a>
-            </div>
-            <button class="md:hidden text-slate-600 hover:text-slate-900 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-    </nav>
+async function getStravaData() {
+    const clientId = process.env.STRAVA_CLIENT_ID;
+    const clientSecret = process.env.STRAVA_CLIENT_SECRET;
+    const refreshToken = process.env.STRAVA_REFRESH_TOKEN;
 
-    <main class="max-w-5xl mx-auto px-6 pt-32">
+    if (!clientId || !clientSecret || !refreshToken) {
+        console.error("Missing Strava API credentials!");
+        process.exit(1);
+    }
+
+    try {
+        // 1. Authenticate with Strava to get a fresh Access Token
+        const tokenResponse = await fetch('https://www.strava.com/api/v3/oauth/token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                client_id: clientId,
+                client_secret: clientSecret,
+                refresh_token: refreshToken,
+                grant_type: 'refresh_token'
+            })
+        });
+        const tokenData = await tokenResponse.json();
         
-        <section id="hero" class="min-h-[70vh] flex flex-col justify-center items-start pb-20">
-            <div class="inline-flex items-center space-x-2 bg-tech-50 text-tech-600 px-3 py-1 rounded-full text-sm font-medium mb-6 border border-tech-100">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tech-500 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-tech-500"></span>
-                </span>
-                <span>Open to new roles</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
-                Hi, I'm Justin Lai.
-            </h1>
-            <h2 class="text-2xl md:text-4xl font-medium text-slate-500 mb-6 tracking-tight">
-                Technical Support Professional
-            </h2>
-            <p class="max-w-2xl text-lg md:text-xl text-slate-600 leading-relaxed mb-10">
-                Dedicated to resolving complex technical issues, streamlining help desk operations, and ensuring exceptional user experiences through empathy and clear communication.
-            </p>
-            <div class="flex space-x-4">
-                <a href="#contact" class="bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-tech-600 transition-colors shadow-sm">
-                    Contact Me
-                </a>
-                <a href="#experience" class="bg-white text-slate-900 border border-slate-200 px-6 py-3 rounded-lg font-medium hover:bg-slate-50 transition-colors shadow-sm">
-                    View Experience
-                </a>
-            </div>
-        </section>
+        if (tokenData.errors || !tokenData.access_token) {
+            console.error("Failed to authenticate with Strava:", tokenData);
+            process.exit(1);
+        }
+        
+        const accessToken = tokenData.access_token;
+        console.log("Successfully authenticated with Strava!");
 
-        <section id="about" class="py-24 border-t border-slate-200">
-            <div class="grid md:grid-cols-12 gap-12">
-                <div class="md:col-span-4">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">01.</h3>
-                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">About Me</h2>
-                </div>
-                <div class="md:col-span-8 prose prose-lg prose-slate">
-                    <p class="text-slate-600 leading-relaxed mb-6">
-                        I am a support specialist with a deep-rooted passion for troubleshooting and problem-solving. My core focus is on resolving complex technical issues, managing help desk operations, and providing exceptional IT support to end-users. I thrive in fast-paced environments where reliability and clear communication are paramount.
-                    </p>
-                    
-                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:space-x-6 mt-10">
-                        <div class="p-4 bg-tech-50 text-tech-600 rounded-xl shrink-0 mb-4 md:mb-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="2" x2="14" y2="2"></line><line x1="12" y1="14" x2="15" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg>
-                        </div>
-                        <div class="w-full">
-                            <h4 class="text-xl text-slate-900 font-bold mb-3 tracking-tight">Beyond the Desk: Hobbies</h4>
-                            <p class="text-base text-slate-600 mb-6 leading-relaxed">
-                                I am a dedicated runner, currently applying the same persistence and drive I use in tech support towards training for the <strong>Toronto Waterfront Marathon</strong>. Discipline and continuous improvement are core to everything I do.
-                            </p>
-                            
-                            <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
-                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Personal Bests</h5>
-                                <div class="flex flex-wrap gap-x-10 gap-y-6 md:gap-x-12 text-sm">
-                                    <div>
-                                        <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">5k</div>
-                                        <div class="font-bold text-tech-600 text-xl tracking-tight">16:18</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">10k</div>
-                                        <div class="font-bold text-tech-600 text-xl tracking-tight">34:03</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">Half Marathon</div>
-                                        <div class="font-bold text-tech-600 text-xl tracking-tight whitespace-nowrap">1:17:01</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">Marathon</div>
-                                        <div class="font-bold text-tech-600 text-xl tracking-tight">2:56:01</div>
-                                    </div>
-                                </div>
-                            </div>
+        // 2. Fetch the last 52 weeks of activities
+        let activities = [];
+        let page = 1;
+        const oneYearAgo = Math.floor((Date.now() - (52 * 7 * 24 * 60 * 60 * 1000)) / 1000);
 
-                            <div class="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200">
-                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Recent Training Mileage</h5>
-                                <div class="relative h-48 w-full transition-opacity">
-                                    <canvas id="mileageChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        while (true) {
+            const res = await fetch(`https://www.strava.com/api/v3/athlete/activities?after=${oneYearAgo}&per_page=200&page=${page}`, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const data = await res.json();
+            
+            if (data.length === 0 || data.errors) {
+                if(data.errors) console.error("Strava API Error:", data.errors);
+                break;
+            }
+            activities.push(...data);
+            page++;
+        }
 
-        <section id="skills" class="py-24 border-t border-slate-200">
-            <div class="grid md:grid-cols-12 gap-12">
-                <div class="md:col-span-4">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">02.</h3>
-                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Core Competencies</h2>
-                    <p class="text-slate-500 mt-4 text-sm leading-relaxed">Specialized skills in maintaining systems, assisting users, and resolving technical challenges.</p>
-                </div>
-                <div class="md:col-span-8">
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Technical Problem Solving</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Troubleshooting</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Customer Onboarding</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Ticket Management</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Help Desk Operations</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Client Communication</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Software Training</span>
-                        <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">User Empathy</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        console.log(`Total activities fetched from Strava: ${activities.length}`);
 
-        <section id="experience" class="py-24 border-t border-slate-200">
-            <div class="grid md:grid-cols-12 gap-12">
-                <div class="md:col-span-4">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">03.</h3>
-                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Experience</h2>
-                </div>
-                <div class="md:col-span-8 space-y-12">
-                    
-                    <div class="relative pl-6 md:pl-0 border-l-2 border-slate-200 md:border-none group">
-                        <div class="md:hidden absolute left-[-9px] top-1.5 h-4 w-4 rounded-full bg-tech-100 border-2 border-tech-500"></div>
-                        
-                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-tech-600 transition-colors">Technical Support Representative</h4>
-                            <span class="inline-flex items-center text-xs font-semibold tracking-wide text-tech-700 bg-tech-50 px-3 py-1 rounded-full mt-2 md:mt-0 w-max border border-tech-200 uppercase">Present</span>
-                        </div>
-                        <div class="text-lg font-medium text-slate-500 mb-4">MDware Software</div>
-                        <p class="text-slate-600 leading-relaxed text-lg">
-                            Helping users maximize the capabilities of our software suite. I am responsible for deep technical troubleshooting, managing client inquiries, and translating technical nuances into actionable, easy-to-understand guidance for end-users to swiftly resolve their problems.
-                        </p>
-                    </div>
+        // 3. Bucket activities into 52 weeks (Aligned to Monday-Sunday)
+        const weeks = Array(52).fill(0);
+        
+        // Find the most recent Sunday at 11:59:59 PM
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+        // If today is Sunday (0), daysToSunday is 0. Otherwise, it's 7 - dayOfWeek.
+        const daysToSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+        
+        const endOfCurrentWeek = new Date(today);
+        endOfCurrentWeek.setDate(today.getDate() + daysToSunday);
+        endOfCurrentWeek.setHours(23, 59, 59, 999);
 
-                    <div class="relative pl-6 md:pl-0 border-l-2 border-slate-200 md:border-none group">
-                        <div class="md:hidden absolute left-[-9px] top-1.5 h-4 w-4 rounded-full bg-slate-100 border-2 border-slate-300"></div>
-                        
-                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-tech-600 transition-colors">Learn to Skate Instructor</h4>
-                            <span class="text-sm font-semibold tracking-wide text-slate-400 mt-2 md:mt-0 uppercase">7 Years</span>
-                        </div>
-                        <div class="text-lg font-medium text-slate-500 mb-4">City of Mississauga</div>
-                        <p class="text-slate-600 leading-relaxed text-lg">
-                            Taught children the fundamentals of ice skating over a span of 7 years. This role profoundly developed my patience, instructional communication, and ability to break down complex physical mechanics into simple steps, skills that directly enhance my ability to support frustrated users with software challenges today.
-                        </p>
-                    </div>
+        let runCount = 0;
 
-                </div>
-            </div>
-        </section>
-
-        <section id="education" class="py-24 border-t border-slate-200">
-            <div class="grid md:grid-cols-12 gap-12">
-                <div class="md:col-span-4">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">04.</h3>
-                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Education</h2>
-                </div>
-                <div class="md:col-span-8">
-                    <div class="relative pl-6 md:pl-0 border-l-2 border-slate-200 md:border-none group">
-                        <div class="md:hidden absolute left-[-9px] top-1.5 h-4 w-4 rounded-full bg-tech-100 border-2 border-tech-500"></div>
-                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-tech-600 transition-colors">Bachelor of Science in Computer Science</h4>
-                        </div>
-                        <div class="text-lg font-medium text-slate-500">Western University</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-32 border-t border-slate-200 text-center flex flex-col items-center">
-            <h3 class="text-tech-600 font-semibold tracking-wider uppercase text-sm mb-4">05. What's Next?</h3>
-            <h2 class="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6">Get In Touch</h2>
-            <p class="max-w-xl text-slate-600 mb-10 text-lg">
-                Whether you have a technical issue that needs solving, need help streamlining your support desk, or just want to discuss running gear, my inbox is open!
-            </p>
-            <a href="mailto:justin6001@gmail.com" class="inline-flex items-center space-x-3 bg-slate-900 text-white px-8 py-4 rounded-xl font-medium hover:bg-tech-600 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 mb-16">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                <span>justin6001@gmail.com</span>
-            </a>
-
-            <div class="flex space-x-6 text-slate-400">
-                <a href="#" class="hover:text-slate-900 transition-colors p-2" aria-label="LinkedIn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
-                <a href="https://www.strava.com/athletes/92895288" target="_blank" rel="noopener noreferrer" class="hover:text-[#fc4c02] transition-colors p-2" aria-label="Strava">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="py-8 text-center text-slate-500 text-sm border-t border-slate-200 bg-white">
-        <p>Designed & Built by Justin Lai</p>
-        <p class="mt-1 opacity-75">&copy; <script>document.write(new Date().getFullYear())</script> All rights reserved.</p>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const ctx = document.getElementById('mileageChart');
-            if (ctx) {
-                let chartData = [86, 68, 44, 69, 3, 56, 55, 65, 45, 48, 57, 30, 54, 49, 60, 43, 60, 61, 73, 67, 33, 61, 56, 74, 74, 35, 63, 71, 70, 71, 46, 42, 40, 70, 64, 38, 7, 24, 24, 24, 43, 60, 50, 55, 29, 60, 87, 91, 95, 87, 85, 48];
+        activities.forEach(activity => {
+            const actType = activity.type ? activity.type.toLowerCase() : '';
+            const sportType = activity.sport_type ? activity.sport_type.toLowerCase() : '';
+            
+            // Only process Runs
+            if (actType.includes('run') || sportType.includes('run')) {
+                runCount++;
+                const activityDate = new Date(activity.start_date);
                 
-                try {
-                    // Update: Now pointing to the new folder!
-                    const response = await fetch('strava_export/strava_data.json');
-                    if (response.ok) {
-                        chartData = await response.json();
-                    }
-                } catch (error) {
-                    console.log('Using fallback data - waiting for GitHub Actions');
+                // Calculate difference in milliseconds from the end of the current week (Sunday)
+                const diffTime = endOfCurrentWeek.getTime() - activityDate.getTime();
+                
+                // Convert to weeks (1 week = 1000 * 60 * 60 * 24 * 7 ms)
+                const weeksAgo = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
+                
+                // If it happened within the last 52 weeks, add it to the correct bucket
+                if (weeksAgo >= 0 && weeksAgo < 52) {
+                    const index = 51 - weeksAgo; // 51 is the current week bucket
+                    weeks[index] += activity.distance / 1000; // Convert meters to km
                 }
-                
-                const bgColors = chartData.map((_, i) => i === chartData.length - 1 ? '#001b2e' : '#007fb6');
-                
-                const labels = Array(52).fill('');
-                const weekRanges = Array(52).fill('');
-                
-                // Align to the end of the current week (Sunday)
-                const today = new Date();
-                const dayOfWeek = today.getDay();
-                const daysToSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
-                const endOfCurrentWeek = new Date(today);
-                endOfCurrentWeek.setDate(today.getDate() + daysToSunday);
-                endOfCurrentWeek.setHours(23, 59, 59, 999);
-
-                for (let i = 51; i >= 0; i--) {
-                    const weeksAgo = 51 - i;
-                    const weekEnd = new Date(endOfCurrentWeek.getTime() - weeksAgo * 7 * 24 * 60 * 60 * 1000);
-                    const weekStart = new Date(weekEnd.getTime() - 6 * 24 * 60 * 60 * 1000);
-                    
-                    // Format for tooltip (e.g., "Sep 14 - Sep 20")
-                    const formatOptions = { month: 'short', day: 'numeric' };
-                    weekRanges[i] = `${weekStart.toLocaleDateString('default', formatOptions)} - ${weekEnd.toLocaleDateString('default', formatOptions)}`;
-
-                    // Show month label if the week ends early in the month
-                    if (weekEnd.getDate() <= 7) {
-                        labels[i] = weekEnd.toLocaleString('default', { month: 'short' });
-                    }
-                }
-
-                new Chart(ctx.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: chartData,
-                            backgroundColor: bgColors,
-                            borderWidth: 0,
-                            barPercentage: 1.0,
-                            categoryPercentage: 0.9,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: { left: 10, bottom: 0, right: 0, top: 10 }
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: '#0f172a',
-                                titleFont: { family: 'Inter', size: 13 },
-                                bodyFont: { family: 'Inter', size: 13 },
-                                padding: 10,
-                                displayColors: false,
-                                callbacks: {
-                                    title: function(context) {
-                                        return weekRanges[context[0].dataIndex];
-                                    },
-                                    label: function(context) {
-                                        return context.parsed.y + ' km';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                grid: { 
-                                    display: true, 
-                                    drawBorder: false,
-                                    color: '#e2e8f0',
-                                    tickLength: 4
-                                },
-                                ticks: {
-                                    font: { family: 'Inter', size: 11 },
-                                    color: '#475569',
-                                    maxRotation: 0,
-                                    autoSkip: false
-                                }
-                            },
-                            y: {
-                                position: 'left',
-                                grid: {
-                                    display: false,
-                                    drawBorder: false,
-                                },
-                                ticks: {
-                                    font: { family: 'Inter', size: 11, weight: '500' },
-                                    color: '#334155',
-                                    padding: 8,
-                                    callback: function(value) {
-                                        if (value === 0) return '0 km';
-                                        return value;
-                                    }
-                                },
-                                min: 0
-                            }
-                        }
-                    }
-                });
             }
         });
-    </script>
-</body>
-</html>
+
+        console.log(`Total 'Run' activities processed: ${runCount}`);
+
+        // Round all numbers to 1 decimal place
+        const roundedWeeks = weeks.map(w => Math.round(w * 10) / 10);
+
+        // Save data to JSON file
+        fs.writeFileSync('strava_data.json', JSON.stringify(roundedWeeks));
+        console.log("Successfully generated strava_data.json!");
+
+    } catch (error) {
+        console.error("Error fetching Strava data:", error);
+        process.exit(1);
+    }
+}
+
+getStravaData();
