@@ -35,29 +35,44 @@ async function getStravaData() {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
             const data = await res.json();
-            if (data.length === 0 || data.errors) break;
+            
+            if (data.length === 0 || data.errors) {
+                if(data.errors) console.error("Strava API Error:", data.errors);
+                break;
+            }
             activities.push(...data);
             page++;
         }
+
+        console.log(`Total activities fetched from Strava: ${activities.length}`);
 
         // 3. Bucket activities into 52 weeks
         const weeks = Array(52).fill(0);
         const now = new Date();
         now.setHours(23, 59, 59, 999); // Normalize to end of today
 
+        let runCount = 0;
+
         activities.forEach(activity => {
-            if (activity.type !== 'Run') return; // Only count runs
+            // Broaden the filter to catch variations of "Run"
+            const actType = activity.type ? activity.type.toLowerCase() : '';
+            const sportType = activity.sport_type ? activity.sport_type.toLowerCase() : '';
             
-            const activityDate = new Date(activity.start_date);
-            const diffTime = now.getTime() - activityDate.getTime();
-            const diffDays = diffTime / (1000 * 60 * 60 * 24);
-            const weeksAgo = Math.floor(diffDays / 7);
-            
-            if (weeksAgo >= 0 && weeksAgo < 52) {
-                const index = 51 - weeksAgo; // 51 is current week
-                weeks[index] += activity.distance / 1000; // Convert meters to km
+            if (actType.includes('run') || sportType.includes('run')) {
+                runCount++;
+                const activityDate = new Date(activity.start_date);
+                const diffTime = now.getTime() - activityDate.getTime();
+                const diffDays = diffTime / (1000 * 60 * 60 * 24);
+                const weeksAgo = Math.floor(diffDays / 7);
+                
+                if (weeksAgo >= 0 && weeksAgo < 52) {
+                    const index = 51 - weeksAgo; // 51 is current week
+                    weeks[index] += activity.distance / 1000; // Convert meters to km
+                }
             }
         });
+
+        console.log(`Total 'Run' activities processed: ${runCount}`);
 
         // Round all numbers to 1 decimal place
         const roundedWeeks = weeks.map(w => Math.round(w * 10) / 10);
