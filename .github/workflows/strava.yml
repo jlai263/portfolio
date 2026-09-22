@@ -12,19 +12,10 @@
 
   - name: Prepare Folder and Commit Data
     run: |
-      # Create a new directory if it doesn't exist
       mkdir -p strava_export 
-      
-      # Move the generated file into the new folder
       mv strava_data.json strava_export/
-      
-      # Setup Git
       git config --global user.name 'github-actions[bot]'
       git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      
-      # Add the new folder and its contents
       git add strava_export/
-      
-      # Commit and Push
       git commit -m "Auto-update Strava graph data" || exit 0
       git push
