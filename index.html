@@ -22,7 +22,7 @@
                             100: '#e0f2fe',
                             200: '#bae6fd',
                             300: '#7dd3fc',
-                            500: '#0ea5e9', // Trustworthy tech blue
+                            500: '#0ea5e9',
                             600: '#0284c7',
                             900: '#0c4a6e',
                         }
@@ -104,7 +104,6 @@
                     
                     <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:space-x-6 mt-10">
                         <div class="p-4 bg-tech-50 text-tech-600 rounded-xl shrink-0 mb-4 md:mb-0">
-                            <!-- Stopwatch icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="2" x2="14" y2="2"></line><line x1="12" y1="14" x2="15" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg>
                         </div>
                         <div class="w-full">
@@ -126,7 +125,7 @@
                                     </div>
                                     <div>
                                         <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">Half Marathon</div>
-                                        <div class="font-bold text-tech-600 text-xl tracking-tight">1:17:01</div>
+                                        <div class="font-bold text-tech-600 text-xl tracking-tight whitespace-nowrap">1:17:01</div>
                                     </div>
                                     <div>
                                         <div class="text-slate-500 mb-1 font-medium whitespace-nowrap">Marathon</div>
@@ -137,54 +136,15 @@
 
                             <div class="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-200">
                                 <h5 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Recent Training Mileage</h5>
-                                <div class="relative h-48 w-full cursor-pointer hover:opacity-90 transition-opacity" title="Click a bar to view activities">
+                                <div class="relative h-48 w-full transition-opacity">
                                     <canvas id="mileageChart"></canvas>
                                 </div>
-                                <div class="flex justify-center mt-3 gap-2 text-xs font-medium text-slate-600">
-
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Activity Modal -->
-        <div id="activityModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-            <div id="modalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">JL</div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-900">Justin Lai</h4>
-                            <p id="modalWeekText" class="text-xs text-slate-500">Weekly Summary</p>
-                        </div>
-                    </div>
-                    <button onclick="closeActivityModal()" class="text-slate-400 hover:text-slate-700 transition-colors p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-                
-                <!-- Modal Body -->
-                <div id="modalBody" class="px-6 py-5 max-h-[60vh] overflow-y-auto">
-                    <!-- Dynamic content will be injected here -->
-                </div>
-                
-                <!-- Modal Footer -->
-                <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500 font-medium">
-                    <div id="activityList" class="space-y-4">
-                        <!-- Activities will be injected here via JS -->
-                    </div>
-                </div>
-                
-                <!-- Modal Footer -->
-                <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-end items-center text-xs text-slate-500 font-medium shrink-0">
-                    <a href="https://www.strava.com/athletes/92895288" target="_blank" rel="noopener noreferrer" class="text-[#fc4c02] hover:underline flex items-center gap-1">
-                        View Full Profile on Strava
-                    </a>
-                </div>
-            </div>
-        </div>
 
         <section id="skills" class="py-24 border-t border-slate-200">
             <div class="grid md:grid-cols-12 gap-12">
@@ -195,7 +155,6 @@
                 </div>
                 <div class="md:col-span-8">
                     <div class="flex flex-wrap gap-3">
-                        <!-- Support Skill Pills -->
                         <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Technical Problem Solving</span>
                         <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Troubleshooting</span>
                         <span class="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 shadow-sm hover:border-tech-300 hover:text-tech-600 transition-colors cursor-default">Customer Onboarding</span>
@@ -217,7 +176,6 @@
                 </div>
                 <div class="md:col-span-8 space-y-12">
                     
-                    <!-- Job 1 -->
                     <div class="relative pl-6 md:pl-0 border-l-2 border-slate-200 md:border-none group">
                         <div class="md:hidden absolute left-[-9px] top-1.5 h-4 w-4 rounded-full bg-tech-100 border-2 border-tech-500"></div>
                         
@@ -231,7 +189,6 @@
                         </p>
                     </div>
 
-                    <!-- Job 2 -->
                     <div class="relative pl-6 md:pl-0 border-l-2 border-slate-200 md:border-none group">
                         <div class="md:hidden absolute left-[-9px] top-1.5 h-4 w-4 rounded-full bg-slate-100 border-2 border-slate-300"></div>
                         
@@ -278,7 +235,6 @@
                 <span>justin6001@gmail.com</span>
             </a>
 
-            <!-- Social Links (Optional) -->
             <div class="flex space-x-6 text-slate-400">
                 <a href="#" class="hover:text-slate-900 transition-colors p-2" aria-label="LinkedIn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -297,15 +253,14 @@
     </footer>
 
     <script>
-        // Chart Logic
         document.addEventListener('DOMContentLoaded', async function() {
             const ctx = document.getElementById('mileageChart');
             if (ctx) {
-                // Default fallback data just in case the JSON hasn't generated yet
                 let chartData = [86, 68, 44, 69, 3, 56, 55, 65, 45, 48, 57, 30, 54, 49, 60, 43, 60, 61, 73, 67, 33, 61, 56, 74, 74, 35, 63, 71, 70, 71, 46, 42, 40, 70, 64, 38, 7, 24, 24, 24, 43, 60, 50, 55, 29, 60, 87, 91, 95, 87, 85, 48];
                 
                 try {
-                    const response = await fetch('strava_data.json');
+                    // Update: Now pointing to the new folder!
+                    const response = await fetch('strava_export/strava_data.json');
                     if (response.ok) {
                         chartData = await response.json();
                     }
@@ -313,15 +268,12 @@
                     console.log('Using fallback data - waiting for GitHub Actions');
                 }
                 
-                // Colors: Strava Blue #007fb6
                 const bgColors = chartData.map((_, i) => i === chartData.length - 1 ? '#001b2e' : '#007fb6');
                 
-                // Dynamically generate the months for the past 52 weeks
                 const labels = Array(52).fill('');
                 const today = new Date();
                 for (let i = 51; i >= 0; i--) {
                     const d = new Date(today.getTime() - (51 - i) * 7 * 24 * 60 * 60 * 1000);
-                    // Add label if it's the first week of the month
                     if (d.getDate() <= 7) {
                         labels[i] = d.toLocaleString('default', { month: 'short' });
                     }
